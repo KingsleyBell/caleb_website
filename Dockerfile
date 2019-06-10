@@ -1,5 +1,5 @@
 FROM python:3.6
-ADD ./app /app
+ADD ./flask_app /flask_app
 
 COPY requirements.txt /tmp/
 COPY data/letsencrypt /etc/letsencrypt
@@ -8,7 +8,7 @@ COPY data/letsencrypt /etc/letsencrypt
 RUN pip install -U pip
 RUN pip install -r /tmp/requirements.txt
 
-WORKDIR /app
+WORKDIR /flask_app
 EXPOSE 8000
 CMD ["gunicorn", "-b", "0.0.0.0:8000", "app"]
 

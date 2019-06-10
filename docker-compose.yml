@@ -7,7 +7,7 @@ services:
       - "80:80"
       - "443:8000"
     volumes:
-      - ./app/nginx_conf:/etc/nginx/conf.d
+      - ./flask_app/nginx_conf:/etc/nginx/conf.d
       - ./data/letsencrypt:/etc/letsencrypt
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     depends_on:
