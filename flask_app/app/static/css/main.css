@@ -1,0 +1,37 @@
+body {
+    font-family: helvetica-w01-light,helvetica-w02-light,sans-serif;
+    font-size: 12px;
+}
+
+.sidebar-sticky {
+    width: 100%;
+}
+
+.nav-link {
+    cursor: pointer;
+}
+
+.nav-link.active {
+    color: black !important;
+}
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block !important;
+}
+
+@media only screen and (min-width: 768px) {
+    /* For desktop: */
+    .sidebar-sticky {
+        position: fixed;
+        top: 3rem;
+        left: 3rem;
+    }
+
+    .site-heading {
+        margin-bottom: 1rem;
+    }
+}

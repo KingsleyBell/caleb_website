@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>PAUL WALLINGTON</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+
+  <!-- Latest compiled and minified Bootstrap 4 beta CSS -->
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+        integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
+        crossorigin="anonymous">
+
+  <!-- Your stuff: Third-party CSS libraries go here -->
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+</head>
+
+<body>
+<div class="container-fluid mt-5">
+  <div class="row">
+    <nav class="col-md-2 sidebar navbar navbar-expand-lg navbar-light" id="home-nav">
+      <div class="sidebar-sticky">
+        <h3 class="site-heading pl-3" style="position: relative">
+          Paul <br>
+          Wallington
+          <div class="navbar-toggler pull-right border-0 text-dark"
+               data-toggle="collapse"
+               data-target="#navbarNavDropdown"
+               aria-controls="navbarNavDropdown"
+               aria-expanded="false"
+               aria-label="Toggle navigation"
+               style="position: absolute; top: 0; right: 0;"
+          >
+            <i class="fa fa-bars" style="font-size: 2rem;"></i>
+          </div>
+        </h3>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="nav flex-column">
+            {% for link in links %}
+              <li class="nav-item">
+                <span class="nav-link {% if loop.index == 1 %}active{% endif %} text-secondary py-0"
+                      id="nav-{{ link.id }}"
+                >
+                  {{ link.name }}
+                </span>
+              </li>
+            {% endfor %}
+            <li class="nav-item">
+                <span class="nav-link text-secondary py-0" id="nav-about">
+                  About
+                </span>
+              </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main role="main" class="col-md-8 px-4">
+      {% for link in links %}
+        <div class="row section {% if loop.index == 1 %}active{% endif %}" id="section-{{ link.id }}">
+          {% for image in link.images %}
+            <div class="col-md-12 pb-5 px-5">
+              <img src="{{ url_for('static', filename='images/uploads/' + image.url) }}" style="max-width: 100%;">
+              <div class="row pt-3 pb-5">
+                <div class="col-md-6">
+                  <p>
+                    <b>{{ image.title }}</b> <br>
+                    {{ image.year }} <br>
+                    {{ image.materials }} <br>
+                    {{ image.width }}cm x {{ image.height }}cm
+                  </p>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+      <div class="row section" id="section-about">
+        Contact meeeee
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+
+<!-- Required by Bootstrap v4 beta -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+          integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+          crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
+        integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+        crossorigin="anonymous"></script>
+<!--Custom js-->
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+</html>
+
