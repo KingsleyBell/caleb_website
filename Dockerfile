@@ -10,6 +10,6 @@ RUN pip install -r /tmp/requirements.txt
 
 WORKDIR /flask_app
 EXPOSE 8000
-CMD ["gunicorn", "-b", "0.0.0.0:8000", "flask_app/app"]
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "flask_app.app"]
 
 
