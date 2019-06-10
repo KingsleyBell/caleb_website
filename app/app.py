@@ -4,7 +4,7 @@ import os
 from flask import Flask, redirect, render_template, request, url_for
 from werkzeug.utils import secure_filename
 
-from flask_app.app.auth import requires_auth
+from app.auth import requires_auth
 
 # the all-important app variable:
 application = Flask(__name__)
