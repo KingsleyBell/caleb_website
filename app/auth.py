@@ -2,7 +2,7 @@ from functools import wraps
 
 from flask import request, Response
 
-from app.settings import PASSWORD, USERNAME
+from settings import PASSWORD, USERNAME
 
 
 def check_auth(username, password):
