@@ -2,7 +2,7 @@ FROM python:3.6
 ADD ./flask_app /flask_app
 
 COPY requirements.txt /tmp/
-COPY data/letsencrypt /etc/letsencrypt
+#COPY data/letsencrypt /etc/letsencrypt
 
 # upgrade pip and install required python packages
 RUN pip install -U pip
