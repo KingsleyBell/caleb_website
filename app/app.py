@@ -20,7 +20,17 @@ def home():
     )
 
 
+# @application.route('/new_section', methods=['GET'])
+# @requires_auth
+# def sections():
+#     db_path = os.path.join(application.static_folder, 'db/db.json')
+#     db = json.loads(open(db_path, 'r').read())
+#     else:
+#         return render_template('sections.html')
+
+
 @application.route('/new_section', methods=['GET', 'POST'])
+@requires_auth
 def new_section():
     db_path = os.path.join(application.static_folder, 'db/db.json')
     db = json.loads(open(db_path, 'r').read())
