@@ -1,19 +1,6 @@
 version: '3'
 services:
-  nginx:
-    restart: always
-    image: nginx:latest
-    ports:
-      - "80:80"
-      - "443:8001"
-    volumes:
-      - ./app/nginx_conf:/etc/nginx/conf.d
-      - ./data/letsencrypt:/etc/letsencrypt
-    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
-    depends_on:
-      - web
-
-  web:
+  paul_web:
     build: ./
     hostname: web
     ports:
