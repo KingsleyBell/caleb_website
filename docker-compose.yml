@@ -11,8 +11,8 @@ services:
     environment:
       VIRTUAL_HOST: paulwallington.co.za
       VIRTUAL_PORT: 8001
-      LETSENCRYPT_HOST: your-website.tld
-      LETSENCRYPT_EMAIL: your-email@domain.tld
+      LETSENCRYPT_HOST: paulwallington.co.za
+      LETSENCRYPT_EMAIL: lukekingsleybell@mail.com
     env_file:
       - "envfile"
 networks:
