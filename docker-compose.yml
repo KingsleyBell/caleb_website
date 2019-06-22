@@ -10,7 +10,3 @@ services:
       - /home/ubuntu/tick.log:/app/tick.log
     env_file:
       - "envfile"
-networks:
-  default:
-    external:
-      name: nginx-proxy
