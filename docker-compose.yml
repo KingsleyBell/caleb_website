@@ -8,7 +8,7 @@ services:
       - "443:8001"
     volumes:
       - ./app/nginx_conf:/etc/nginx/conf.d
-#      - ./data/letsencrypt:/etc/letsencrypt
+      - ./data/letsencrypt:/etc/letsencrypt
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     depends_on:
       - web
