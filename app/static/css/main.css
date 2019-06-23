@@ -3,6 +3,11 @@ body {
     font-size: 12px;
 }
 
+#home-link {
+    text-decoration: none;
+    color: inherit;
+}
+
 .sidebar-sticky {
     width: 100%;
 }
