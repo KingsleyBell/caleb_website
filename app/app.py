@@ -179,10 +179,10 @@ def new_home_image():
 @requires_auth
 def new_cv():
     if request.method == 'POST':
-        image_file = request.files.get('file')
-        upload_folder = os.path.join(application.static_folder, 'images')
-        filename = "home.jpg"
-        image_file.save(os.path.join(upload_folder, filename))
+        cv_file = request.files.get('file')
+        upload_folder = os.path.join(application.static_folder, 'pdf')
+        filename = "CV.pdf"
+        cv_file.save(os.path.join(upload_folder, filename))
 
         return redirect(url_for('sections'))
     else:
