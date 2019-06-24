@@ -29,6 +29,8 @@ def sections():
         section_id = request.form.get('section_id')
 
         section = [section for section in db if section['id'] == section_id][0]
+        for image in section['images']:
+            delete_image_file(image['url'])
         db.remove(section)
 
         with open(db_path, 'w') as db_write:
@@ -105,8 +107,10 @@ def delete_image():
     db = json.loads(open(db_path, 'r').read())
     section = [s for s in db if s['id'] == section_id][0]
     image = [i for i in section['images'] if i['id'] == image_id][0]
+    filename = image['url']
 
     section['images'].remove(image)
+    delete_image_file(filename)
 
     return jsonify({'success': True})
 
@@ -119,9 +123,10 @@ def upload(section_id=None):
     db = json.loads(open(db_path, 'r').read())
     if request.method == 'POST':
         section = request.form.get('section')
+
         images = []
-        for section in db:
-            images += section['images']
+        for s in db:
+            images += s['images']
         image_id = max(image['id'] for image in images) + 1
 
         db_section = [s for s in db if s['id'] == section][0]
@@ -135,9 +140,9 @@ def upload(section_id=None):
         align = request.form.get('align')
 
         image_file = request.files.get('file')
-        file_extension = image_file.name.split('.')[-1]
+        file_extension = image_file.filename.split('.')[-1]
         upload_folder = os.path.join(application.static_folder, 'images/uploads')
-        filename = secure_filename(image_id + '.' + file_extension)
+        filename = secure_filename(str(image_id) + '.' + file_extension)
         image_file.save(os.path.join(upload_folder, filename))
 
         image_dict = {
@@ -156,7 +161,7 @@ def upload(section_id=None):
         with open(db_path, 'w') as db_write:
             db_write.write(json.dumps(db))
 
-        return redirect(url_for('home'))
+        return redirect(url_for('sections'))
     else:
         sections = {section['name']: section['id'] for section in db}
         return render_template('upload.html', sections=sections, section=section_id)
@@ -193,6 +198,11 @@ def new_cv():
 @application.route('/cv')
 def cv():
     return application.send_static_file('pdf/CV.pdf')
+
+
+def delete_image_file(filename):
+    upload_folder = os.path.join(application.static_folder, 'images/uploads')
+    os.remove(os.path.join(upload_folder, filename))
 
 
 if __name__ == "__main__":

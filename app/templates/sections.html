@@ -17,13 +17,17 @@
     <div class="col-md-12">
       <h3 class="pb-3">
         ADMIN
-        <a href="{{ url_for('new_section') }}"
-           class="btn btn-outline-dark"
+        <a href="{{ url_for('home') }}"
+           class="btn btn-outline-primary"
            style="float: right;">
-          New
+          Home
         </a>
       </h3>
       <h3 class="pb-3">
+        <a href="{{ url_for('new_section') }}"
+           class="btn btn-outline-dark">
+          New Section
+        </a>
         <a href="{{ url_for('new_home_image') }}"
            class="btn btn-outline-dark">
           New Home Image
