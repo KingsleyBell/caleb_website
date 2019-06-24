@@ -135,8 +135,9 @@ def upload(section_id=None):
         align = request.form.get('align')
 
         image_file = request.files.get('file')
+        file_extension = image_file.name.split('.')[-1]
         upload_folder = os.path.join(application.static_folder, 'images/uploads')
-        filename = secure_filename(image_file.filename)
+        filename = secure_filename(image_id + '.' + file_extension)
         image_file.save(os.path.join(upload_folder, filename))
 
         image_dict = {
