@@ -1,7 +1,9 @@
 $(document).ready(function() {
   $("#home-link").click(function(e) {
     e.preventDefault();
-    $(".nav-link")[0].click();
+    $(".section.active").removeClass("active");
+    $(".nav-link.active").removeClass("active");
+    $("#section-web-home").addClass("active");
   });
 
   $(".nav-link").click(function(e) {

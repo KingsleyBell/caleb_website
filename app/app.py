@@ -172,7 +172,21 @@ def new_home_image():
 
         return redirect(url_for('sections'))
     else:
-        return render_template('new_home_image.html')
+        return render_template('upload_file.html', form_label='New Home Image (must be jpg)')
+
+
+@application.route('/new_cv/', methods=['GET', 'POST'])
+@requires_auth
+def new_cv():
+    if request.method == 'POST':
+        image_file = request.files.get('file')
+        upload_folder = os.path.join(application.static_folder, 'images')
+        filename = "home.jpg"
+        image_file.save(os.path.join(upload_folder, filename))
+
+        return redirect(url_for('sections'))
+    else:
+        return render_template('upload_file.html', form_label='New CV (must be pdf)')
 
 
 @application.route('/cv')

@@ -4,4 +4,5 @@
 venv/
 envfile
 app/static/db/*
+app/static/pdf/*
 app/static/images/uploads/*
