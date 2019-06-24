@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SECTIONS</title>
+
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+        integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
+        crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+      {% for section in db %}
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ section.name }}</h5>
+          <ul>
+            {% for image in section.images %}
+              <li class="py-3">
+                {{ image.title }}
+                <a href="{{ url_for('edit_image', image_id=image.id, section_id=section.id) }}"
+                   class="btn btn-outline-primary btn-sm"
+                   style="float: right;">
+                  Edit
+                </a>
+                <button id="delete-{{ image.id }}"
+                        class="btn btn-outline-danger btn-sm"
+                        style="float: right;">
+                  Delete
+                </button>
+                <br>
+                <small>{{ image.year }} | {{ image.width }} x {{ image.height }} | {{ image.materials }}</small>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+</body>
+</html>
