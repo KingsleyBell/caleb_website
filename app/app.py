@@ -1,7 +1,7 @@
 import json
 import os
 
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, jsonify, redirect, render_template, request, url_for
 from werkzeug.utils import secure_filename
 
 from auth import requires_auth
@@ -20,13 +20,22 @@ def home():
     )
 
 
-# @application.route('/new_section', methods=['GET'])
-# @requires_auth
-# def sections():
-#     db_path = os.path.join(application.static_folder, 'db/db.json')
-#     db = json.loads(open(db_path, 'r').read())
-#     else:
-#         return render_template('sections.html')
+@application.route('/sections', methods=['GET', 'POST'])
+@requires_auth
+def sections():
+    db_path = os.path.join(application.static_folder, 'db/db.json')
+    db = json.loads(open(db_path, 'r').read())
+    if request.method == 'POST':  # Delete section
+        section_id = request.form.get('section_id')
+        section = [section for section in db if section['id'] == section_id][0]
+        db.remove(section)
+
+        with open(db_path, 'w') as db_write:
+            db_write.write(json.dumps(db))
+
+        return jsonify({'success': True})
+    else:
+        return render_template('sections.html', db=db)
 
 
 @application.route('/new_section', methods=['GET', 'POST'])
@@ -47,6 +56,40 @@ def new_section():
         return render_template('new_section.html')
 
 
+@application.route('/edit_image/<string:section_id>/<int:image_id>/', methods=['GET', 'POST'])
+@requires_auth
+def edit_image(section_id, image_id):
+    db_path = os.path.join(application.static_folder, 'db/db.json')
+    db = json.loads(open(db_path, 'r').read())
+    section = [s for s in db if s['id'] == section_id][0]
+    image = [i for i in section['images'] if i['id'] == image_id][0]
+    if request.method == 'POST':
+        title = request.form.get('title')
+        year = request.form.get('year')
+        width = request.form.get('width')
+        height = request.form.get('height')
+        materials = request.form.get('materials')
+
+        image["title"] =  title
+        image["year"] = year
+        image["width"] = width
+        image["height"] = height
+        image["materials"] = materials
+
+        with open(db_path, 'w') as db_write:
+            db_write.write(json.dumps(db))
+
+        return redirect(url_for('sections'))
+    else:
+        sections = [section['name'] for section in db]
+        return render_template(
+            'edit_image.html',
+            image=image,
+            section=section['name'],
+            sections=sections
+        )
+
+
 @application.route('/upload', methods=['GET', 'POST'])
 @requires_auth
 def upload():
@@ -54,6 +97,10 @@ def upload():
     db = json.loads(open(db_path, 'r').read())
     if request.method == 'POST':
         section = request.form.get('section')
+        images = []
+        for section in db:
+            images += section['images']
+        image_id = max(image['id'] for image in images) + 1
 
         db_section = [s for s in db if s['name'] == section][0]
 
@@ -69,6 +116,7 @@ def upload():
         image_file.save(os.path.join(upload_folder, filename))
 
         image_dict = {
+            "id": image_id,
             "url": filename,
             "title": title,
             "year": year,
