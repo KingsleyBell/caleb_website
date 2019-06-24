@@ -55,7 +55,7 @@
           <ul class="nav flex-column">
             {% for link in links %}
               <li class="nav-item">
-                <span class="nav-link {% if loop.index == 1 %}active{% endif %} text-secondary py-0"
+                <span class="nav-link text-secondary py-0"
                       id="nav-{{ link.id }}"
                 >
                   {{ link.name }}
@@ -73,13 +73,17 @@
     </nav>
 
     <main role="main" class="col-md-8 px-4">
+      <div class="row section active" id="section-web-home">
+        <div class="col-md-12 px-5 pb-5 text-center">
+          <img src="{{ url_for('static', filename='images/home.jpg') }}" style="max-height: 80vh;">
+        </div>
+      </div>
       {% for link in links %}
-        <div class="row section {% if loop.index == 1 %}active{% endif %}" id="section-{{ link.id }}">
+        <div class="row section" id="section-{{ link.id }}">
           {% for image in link.images %}
             <div class="col-md-12 px-5 pb-5" style="text-align: {{ image.align }};">
               <img src="{{ url_for('static', filename='images/uploads/' + image.url) }}"
-                   style="width: {{ image.display_width }}%;"
-              >
+                   style="width: {{ image.display_width }}%;">
               <div class="row pt-3 pb-5">
                 <div class="col-md-6">
                   <p>
