@@ -3,5 +3,5 @@
 .idea/
 venv/
 envfile
-app/static/db/db.json
+app/static/db/*
 app/static/images/uploads/*
