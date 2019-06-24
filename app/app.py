@@ -20,7 +20,7 @@ def home():
     )
 
 
-@application.route('/sections/', methods=['GET', 'POST'])
+@application.route('/admin/', methods=['GET', 'POST'])
 @requires_auth
 def sections():
     db_path = os.path.join(application.static_folder, 'db/db.json')
@@ -159,6 +159,20 @@ def upload(section_id=None):
     else:
         sections = {section['name']: section['id'] for section in db}
         return render_template('upload.html', sections=sections, section=section_id)
+
+
+@application.route('/new_home_image/', methods=['GET', 'POST'])
+@requires_auth
+def new_home_image():
+    if request.method == 'POST':
+        image_file = request.files.get('file')
+        upload_folder = os.path.join(application.static_folder, 'images')
+        filename = "home.jpg"
+        image_file.save(os.path.join(upload_folder, filename))
+
+        return redirect(url_for('sections'))
+    else:
+        return render_template('new_home_image.html')
 
 
 @application.route('/cv')

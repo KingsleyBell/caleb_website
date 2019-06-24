@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>SECTIONS</title>
+  <title>ADMIN</title>
 
   <link rel="stylesheet"
         href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
@@ -16,12 +16,17 @@
   <div class="row justify-content-center mt-5">
     <div class="col-md-12">
       <h3 class="pb-3">
-        Sections
+        ADMIN
+        <a href="{{ url_for('new_home_image') }}"
+           class="btn btn-outline-primary ml-1"
+           style="float: right;">
+          New Home Image
+        </a>
         <a href="{{ url_for('new_section') }}"
-               class="btn btn-outline-dark"
-               style="float: right;">
-              New
-            </a>
+           class="btn btn-outline-dark"
+           style="float: right;">
+          New
+        </a>
       </h3>
       {% for section in db %}
       <div class="card mb-3" id="section-{{ section.id }}">
