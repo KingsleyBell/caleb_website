@@ -47,6 +47,16 @@
                     style="float: right;">
               <i class="fa fa-times" style="pointer-events: none"></i>
             </button>
+            <button id="shift-section-down-{{ section.id }}"
+                    class="shift-section-down btn btn-sm btn-outline-success ml-1"
+                    style="float: right;">
+              <i class="fa fa-arrow-down" style="pointer-events: none"></i>
+            </button>
+            <button id="shift-section-up-{{ section.id }}"
+                    class="shift-section-up btn btn-sm btn-outline-success ml-1"
+                    style="float: right;">
+              <i class="fa fa-arrow-up" style="pointer-events: none"></i>
+            </button>
             <a href="{{ url_for('upload', section_id=section.id) }}"
                class="btn btn-outline-dark btn-sm"
                style="float: right;">
@@ -56,12 +66,22 @@
           <hr>
           <ul>
             {% for image in section.images %}
-              <li class="py-3" id="image-{{ image.id }}">
+              <li class="py-3 section-image" id="image-{{ image.id }}">
                 {{ image.title }}
                 <button id="delete-image-{{ section.id }}-{{ image.id }}"
                         class="delete-image btn btn-outline-danger btn-sm ml-1"
                         style="float: right;">
                   <i class="fa fa-times" style="pointer-events: none"></i>
+                </button>
+                <button id="shift-image-down-{{ section.id }}-{{ image.id }}"
+                        class="shift-image-down btn btn-sm btn-outline-success ml-1"
+                        style="float: right;">
+                  <i class="fa fa-arrow-down" style="pointer-events: none"></i>
+                </button>
+                <button id="shift-image-up-{{ section.id }}-{{ image.id }}"
+                        class="shift-image-up btn btn-sm btn-outline-success ml-1"
+                        style="float: right;">
+                  <i class="fa fa-arrow-up" style="pointer-events: none"></i>
                 </button>
                 <a href="{{ url_for('edit_image', image_id=image.id, section_id=section.id) }}"
                    class="btn btn-outline-primary btn-sm"
@@ -102,7 +122,9 @@
         crossorigin="anonymous"></script>
 <!--Custom js-->
 <script>
-  var deleteImageUrl = "{{ url_for('delete_image') }}";
+  var deleteImageUrl = "{{ url_for('delete_image') }}",
+    shiftImageUrl = "{{ url_for('shift_image_position') }}",
+    shiftSectionUrl = "{{ url_for('shift_section_position') }}";
 </script>
 <script src="{{ url_for('static', filename='js/sections.js') }}"></script>
 </body>

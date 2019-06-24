@@ -200,6 +200,56 @@ def cv():
     return application.send_static_file('pdf/CV.pdf')
 
 
+@application.route('/shift_section_position', methods=['POST'])
+def shift_section_position():
+    section_id = request.form.get('section_id')
+    shift = int(request.form.get('shift'))
+
+    db_path = os.path.join(application.static_folder, 'db/db.json')
+    db = json.loads(open(db_path, 'r').read())
+
+    section = [s for s in db if s['id'] == section_id][0]
+    section_index = db.index(section)
+
+    if section_index == 0 and shift < 0:  # can't shift up if at top
+        return jsonify({'success': False})
+    if section_index == len(db) - 1 and shift > 0:  # Can't shift down if at bottom
+        return jsonify({'success': False})
+
+    db[section_index], db[section_index + shift] = db[section_index + shift], db[section_index]
+
+    with open(db_path, 'w') as db_write:
+        db_write.write(json.dumps(db))
+
+    return jsonify({'success': True})
+
+
+@application.route('/shift_image_position', methods=['POST'])
+def shift_image_position():
+    section_id = request.form.get('section_id')
+    image_id = int(request.form.get('image_id'))
+    shift = int(request.form.get('shift'))
+
+    db_path = os.path.join(application.static_folder, 'db/db.json')
+    db = json.loads(open(db_path, 'r').read())
+
+    section = [s for s in db if s['id'] == section_id][0]
+    image = [i for i in section['images'] if i['id'] == image_id][0]
+    image_index = section['images'].index(image)
+
+    if image_index == 0 and shift < 0:  # can't shift up if at top
+        return jsonify({'success': False})
+    if image_index == len(section['images']) - 1 and shift > 0:  # Can't shift down if at bottom
+        return jsonify({'success': False})
+
+    section['images'][image_index], section['images'][image_index + shift] = section['images'][image_index + shift], section['images'][image_index]
+
+    with open(db_path, 'w') as db_write:
+        db_write.write(json.dumps(db))
+
+    return jsonify({'success': True})
+
+
 def delete_image_file(filename):
     upload_folder = os.path.join(application.static_folder, 'images/uploads')
     os.remove(os.path.join(upload_folder, filename))
