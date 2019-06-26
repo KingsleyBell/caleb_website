@@ -124,10 +124,10 @@ def upload(section_id=None):
     if request.method == 'POST':
         section = request.form.get('section')
 
-        images = []
+        image_ids = []
         for s in db:
-            images += s['images']
-        image_id = max(image['id'] for image in images) + 1
+            image_ids += [image['id'] for image in s['images']]
+        image_id = max(image_ids + [0]) + 1
 
         db_section = [s for s in db if s['id'] == section][0]
 
