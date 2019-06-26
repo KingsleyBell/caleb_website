@@ -7,7 +7,9 @@ services:
     ports:
       - "8001:8001"
     volumes:
-      - /home/ubuntu/tick.log:/app/tick.log
+      - /home/ubuntu/paul_website/app/static/db/db.json:/app/static/db/db.json
+      - /home/ubuntu/paul_website/app/static/images/:/app/static/images/
+      - /home/ubuntu/paul_website/app/static/pdf/:/app/static/pdf/
     env_file:
       - "envfile"
 networks:
