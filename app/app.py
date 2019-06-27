@@ -112,6 +112,9 @@ def delete_image():
     section['images'].remove(image)
     delete_image_file(filename)
 
+    with open(db_path, 'w') as db_write:
+        db_write.write(json.dumps(db))
+
     return jsonify({'success': True})
 
 
