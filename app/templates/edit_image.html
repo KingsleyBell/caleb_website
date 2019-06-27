@@ -36,6 +36,7 @@
           <label for="align">Align</label>
           <select class="form-control" id="align" name="align" required>
             <option {% if image.align == 'left' %}selected{% endif %}>left</option>
+            <option {% if image.align == 'center' %}selected{% endif %}>center</option>
             <option {% if image.align == 'right' %}selected{% endif %}>right</option>
           </select>
         </div>

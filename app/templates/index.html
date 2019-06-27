@@ -81,17 +81,27 @@
       {% for link in links %}
         <div class="row section" id="section-{{ link.id }}">
           {% for image in link.images %}
-            <div class="col-md-12 px-5 pb-5" style="text-align: {{ image.align }};">
-              <img src="{{ url_for('static', filename='images/uploads/' + image.url) }}"
-                   style="width: {{ image.display_width }}%;">
-              <div class="row pt-3 pb-5">
-                <div class="col-md-12">
-                  <p>
-                    <b>{{ image.title }}</b> <br>
-                    {{ image.year }} <br>
-                    {{ image.materials }} <br>
-                    {{ image.width }}cm x {{ image.height }}cm
-                  </p>
+            <div class="col-md-12 px-5 pb-5"
+                 {% if image.align in ['left', 'right'] %}
+                   style="text-align: {{ image.align }};"
+                 {% endif %}>
+              <div style="width: {{ image.display_width }}%;
+                          {% if image.align == 'center' %}
+                            margin: auto;
+                          {% elif image.align == 'right' %}
+                            float: right;
+                          {% endif %}">
+                <img src="{{ url_for('static', filename='images/uploads/' + image.url) }}"
+                     style="width: 100%;">
+                <div class="row pt-3 pb-5">
+                  <div class="col-md-12">
+                    <p>
+                      <b>{{ image.title }}</b> <br>
+                      {{ image.year }} <br>
+                      {{ image.materials }} <br>
+                      {{ image.width }}cm x {{ image.height }}cm
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
