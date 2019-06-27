@@ -52,3 +52,20 @@ body {
         margin-bottom: 1rem;
     }
 }
+
+ol {
+  list-style: none;
+  counter-reset: ol-counter;
+  padding: 0;
+}
+ol li {
+  counter-increment: ol-counter;
+  padding-left: 2rem;
+}
+ol li::before {
+  content: counter(ol-counter) ". ";
+  font-weight: bold;
+  margin-left: -2rem;
+  padding-right: 1rem;
+}
+
