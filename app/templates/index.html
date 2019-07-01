@@ -35,22 +35,22 @@
   <div class="row">
     <nav class="col-md-2 sidebar navbar navbar-expand-lg navbar-light pb-4" id="home-nav">
       <div class="sidebar-sticky">
-        <a href="#" id="home-link">
-          <h3 class="site-heading pl-3" style="position: relative">
+        <h3 class="site-heading pl-3" style="position: relative">
+          <a href="#" id="home-link">
             Paul <br>
             Wallington
-            <div class="navbar-toggler pull-right border-0 text-dark"
-                 data-toggle="collapse"
-                 data-target="#navbarNavDropdown"
-                 aria-controls="navbarNavDropdown"
-                 aria-expanded="false"
-                 aria-label="Toggle navigation"
-                 style="position: absolute; top: 0; right: 0;"
-            >
-              <i class="fa fa-bars" style="font-size: 2rem;"></i>
-            </div>
-          </h3>
-        </a>
+          </a>
+          <div class="navbar-toggler pull-right border-0 text-dark"
+               data-toggle="collapse"
+               data-target="#navbarNavDropdown"
+               aria-controls="navbarNavDropdown"
+               aria-expanded="false"
+               aria-label="Toggle navigation"
+               style="position: absolute; top: 0; right: 0;"
+          >
+            <i class="fa fa-bars" style="font-size: 2rem;"></i>
+          </div>
+        </h3>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="nav flex-column">
             {% for link in links %}
@@ -73,14 +73,14 @@
     </nav>
 
     <main role="main" class="col-md-8 px-4">
-      <div class="row section active" id="section-web-home">
+      <div class="row section px-3 active" id="section-web-home">
         <div class="col-md-12 px-0 pb-5 text-center">
           <img src="{{ url_for('static', filename='images/home.jpg') }}"
                style="max-height: 80vh; max-width: 100%;">
         </div>
       </div>
       {% for link in links %}
-        <div class="row section" id="section-{{ link.id }}">
+        <div class="row section px-3" id="section-{{ link.id }}">
           {% for image in link.images %}
             {% if image.full_width %}
               <div class="w-100">
