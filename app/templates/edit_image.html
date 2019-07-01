@@ -39,6 +39,11 @@
             <option {% if image.align == 'center' %}selected{% endif %}>center</option>
             <option {% if image.align == 'right' %}selected{% endif %}>right</option>
           </select>
+          <label for="full_width">Full Width</label>
+          <select class="form-control" id="full_width" name="full_width" required>
+            <option {% if image.full_width %}selected{% endif %}>true</option>
+            <option {% if not image.full_width %}selected{% endif %}>false</option>
+          </select>
         </div>
         <button type="submit" class="btn btn-primary mb-2">Submit</button>
       </form>

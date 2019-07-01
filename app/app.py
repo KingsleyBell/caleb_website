@@ -74,6 +74,7 @@ def edit_image(section_id, image_id):
         materials = request.form.get('materials')
         display_width = request.form.get('display_width')
         align = request.form.get('align')
+        full_width = request.form.get('full_width') == "true"
 
         image["title"] = title
         image["year"] = year
@@ -82,6 +83,7 @@ def edit_image(section_id, image_id):
         image["materials"] = materials
         image["display_width"] = display_width
         image["align"] = align
+        image["full_width"] = full_width
 
         with open(db_path, 'w') as db_write:
             db_write.write(json.dumps(db))
@@ -141,6 +143,7 @@ def upload(section_id=None):
         materials = request.form.get('materials')
         display_width = request.form.get('display_width')
         align = request.form.get('align')
+        full_width = request.form.get('full_width') == "true"
 
         image_file = request.files.get('file')
         file_extension = image_file.filename.split('.')[-1]
@@ -157,7 +160,8 @@ def upload(section_id=None):
             "height": height,
             "materials": materials,
             "display_width": display_width,
-            "align": align
+            "align": align,
+            "full_width": full_width
           }
 
         db_section['images'].append(image_dict)
