@@ -49,7 +49,7 @@ def new_section():
     if request.method == 'POST':
         section_name = request.form.get('section')
         section_id = section_name.replace(' ', '_').lower()
-        section_dict = {'name': section_name, 'id': section_id, 'images': []}
+        section_dict = {'name': section_name, 'id': section_id, 'text': '', 'images': []}
         db.append(section_dict)
         with open(db_path, 'w') as db_write:
             db_write.write(json.dumps(db))
@@ -57,6 +57,29 @@ def new_section():
         return redirect(url_for('sections'))
     else:
         return render_template('new_section.html')
+
+
+@application.route('/edit_section/<string:section_id>/', methods=['GET', 'POST'])
+@requires_auth
+def edit_section(section_id):
+    db_path = os.path.join(application.static_folder, 'db/db.json')
+    db = json.loads(open(db_path, 'r').read())
+    section = [s for s in db if s['id'] == section_id][0]
+    if request.method == 'POST':
+        section_name = request.form.get('name')
+        section_id = section_name.replace(' ', '_').lower()
+        section_text = request.form.get('text')
+
+        section['name'] = section_name
+        section['id'] = section_id
+        section['text'] = section_text
+
+        with open(db_path, 'w') as db_write:
+            db_write.write(json.dumps(db))
+
+        return redirect(url_for('sections'))
+    else:
+        return render_template('edit_section.html', section=section)
 
 
 @application.route('/edit_image/<string:section_id>/<int:image_id>/', methods=['GET', 'POST'])

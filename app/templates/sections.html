@@ -43,6 +43,10 @@
         <div class="card-body">
           <h5 class="card-title">
             {{ section.name }}
+            <a href="{{ url_for('edit_section', section_id=section.id) }}"
+               class="btn btn-outline-primary btn-sm ml-2">
+              <i class="fa fa-pencil" style="pointer-events: none"></i>
+            </a>
             <button id="delete-section-{{ section.id }}"
                     class="delete-section btn btn-sm btn-outline-danger ml-1"
                     style="float: right;">

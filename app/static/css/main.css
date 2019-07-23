@@ -68,3 +68,12 @@ ol li::before {
   padding-right: 1rem;
 }
 
+.menu-nav {
+    text-decoration: none !important;
+    padding-right: 1rem;
+    color: #868e96!important;
+}
+
+.menu-nav.active {
+    color: #343a40!important;
+}

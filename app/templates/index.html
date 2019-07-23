@@ -81,38 +81,57 @@
       </div>
       {% for link in links %}
         <div class="row section px-3" id="section-{{ link.id }}">
-          {% for image in link.images %}
-            {% if image.full_width %}
-              <div class="w-100">
+          <ul class="nav nav-tabs w-100 mb-3">
+            <li>
+              <h5><a class="menu-nav active show" data-toggle="tab" href="#photos-{{ link.id }}">Photos</a></h5>
+            </li>
+            {% if link.text %}
+              <li class="active">
+                <h5><a class="menu-nav" data-toggle="tab" href="#text-{{ link.id }}">Text</a></h5>
+              </li>
             {% endif %}
-            <div style="width: {{ image.display_width }}%;
-                        {% if image.align in ['left', 'right'] %}
-                          text-align: {{ image.align }};
-                          {% if image.align == 'left' %}
-                            margin-right: auto;
-                          {% else %}
-                            margin-left: auto;
-                          {% endif %}
-                        {% elif image.align == 'center' %}
-                          margin: auto;
-                        {% endif %}">
-              <img src="{{ url_for('static', filename='images/uploads/' + image.url) }}"
-                   style="width: 100%;">
-              <div class="row pt-3 pb-5">
-                <div class="col-md-12">
-                  <p>
-                    <b>{{ image.title }}</b> <br>
-                    {{ image.year }} <br>
-                    {{ image.materials }} <br>
-                    {{ image.width }}cm x {{ image.height }}cm
-                  </p>
+          </ul>
+          <div class="tab-content w-100">
+            <div id="photos-{{ link.id }}" class="tab-pane fade show active">
+              {% for image in link.images %}
+                {% if image.full_width %}
+                  <div class="w-100">
+                {% endif %}
+                <div style="width: {{ image.display_width }}%;
+                            {% if image.align in ['left', 'right'] %}
+                              text-align: {{ image.align }};
+                              {% if image.align == 'left' %}
+                                margin-right: auto;
+                              {% else %}
+                                margin-left: auto;
+                              {% endif %}
+                            {% elif image.align == 'center' %}
+                              margin: auto;
+                            {% endif %}">
+                  <img src="{{ url_for('static', filename='images/uploads/' + image.url) }}"
+                       style="width: 100%;">
+                  <div class="row pt-3 pb-5">
+                    <div class="col-md-12">
+                      <p>
+                        <b>{{ image.title }}</b> <br>
+                        {{ image.year }} <br>
+                        {{ image.materials }} <br>
+                        {{ image.width }}cm x {{ image.height }}cm
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
+                {% if image.full_width %}
+                  </div>
+                {% endif %}
+              {% endfor %}
             </div>
-            {% if image.full_width %}
+            {% if link.text %}
+              <div id="text-{{ link.id }}" class="tab-pane fade">
+                <p>{{ link.text }}</p>
               </div>
             {% endif %}
-          {% endfor %}
+          </div>
         </div>
       {% endfor %}
       <div class="row section" id="section-about" style="font-size: 1rem; line-height: 2rem;">
