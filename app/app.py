@@ -1,5 +1,6 @@
 import json
 import os
+import re
 
 from flask import Flask, jsonify, redirect, render_template, request, url_for
 from werkzeug.utils import secure_filename
@@ -48,7 +49,7 @@ def new_section():
     db = json.loads(open(db_path, 'r').read())
     if request.method == 'POST':
         section_name = request.form.get('section')
-        section_id = section_name.replace(' ', '_').lower()
+        section_id = re.sub('[^A-Za-z0-9]+', '_', section_name).lower()
         section_dict = {'name': section_name, 'id': section_id, 'text': '', 'images': []}
         db.append(section_dict)
         with open(db_path, 'w') as db_write:
@@ -67,7 +68,7 @@ def edit_section(section_id):
     section = [s for s in db if s['id'] == section_id][0]
     if request.method == 'POST':
         section_name = request.form.get('name')
-        section_id = section_name.replace(' ', '_').lower()
+        section_id = re.sub('[^A-Za-z0-9]+', '_', section_name).lower()
         section_text = request.form.get('text')
 
         section['name'] = section_name
