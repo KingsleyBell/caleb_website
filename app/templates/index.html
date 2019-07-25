@@ -15,8 +15,8 @@
 
   <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
   <!--[if lt IE 9]>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <![endif]-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <![endif]-->
 
   <!-- Latest compiled and minified Bootstrap 4 beta CSS -->
   <link rel="stylesheet"
@@ -54,19 +54,19 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="nav flex-column">
             {% for link in links %}
-              <li class="nav-item">
+            <li class="nav-item">
                 <span class="nav-link text-secondary py-0"
                       id="nav-{{ link.id }}"
                 >
                   {{ link.name }}
                 </span>
-              </li>
+            </li>
             {% endfor %}
             <li class="nav-item">
                 <span class="nav-link text-secondary py-0" id="nav-about">
                   About
                 </span>
-              </li>
+            </li>
           </ul>
         </div>
       </div>
@@ -80,24 +80,25 @@
         </div>
       </div>
       {% for link in links %}
-        <div class="row section px-3" id="section-{{ link.id }}">
-          <ul class="nav nav-tabs w-100 mb-3">
-            <li>
-              <h5><a class="menu-nav active show" data-toggle="tab" href="#photos-{{ link.id }}">Photos</a></h5>
-            </li>
-            {% if link.text %}
-              <li class="active">
-                <h5><a class="menu-nav" data-toggle="tab" href="#text-{{ link.id }}">Text</a></h5>
-              </li>
-            {% endif %}
-          </ul>
-          <div class="tab-content w-100">
-            <div id="photos-{{ link.id }}" class="tab-pane fade show active">
-              {% for image in link.images %}
-                {% if image.full_width %}
-                  <div class="w-100">
-                {% endif %}
-                <div style="width: {{ image.display_width }}%;
+      <div class="row section px-3" id="section-{{ link.id }}">
+        <ul class="nav nav-tabs w-100 mb-3">
+          <li>
+            <h5><a class="menu-nav active show" data-toggle="tab" href="#photos-{{ link.id }}">Photos</a>
+            </h5>
+          </li>
+          {% if link.text %}
+          <li class="active">
+            <h5><a class="menu-nav" data-toggle="tab" href="#text-{{ link.id }}">Text</a></h5>
+          </li>
+          {% endif %}
+        </ul>
+        <div class="tab-content w-100">
+          <div id="photos-{{ link.id }}" class="tab-pane fade show active">
+            {% for image in link.images %}
+            {% if image.full_width %}
+            <div class="w-100">
+              {% endif %}
+              <div style="width: {{ image.display_width }}%;
                             {% if image.align in ['left', 'right'] %}
                               text-align: {{ image.align }};
                               {% if image.align == 'left' %}
@@ -108,43 +109,47 @@
                             {% elif image.align == 'center' %}
                               margin: auto;
                             {% endif %}">
-                  <img src="{{ url_for('static', filename='images/uploads/' + image.url) }}"
-                       style="width: 100%;">
-                  <div class="row pt-3 pb-5">
-                    <div class="col-md-12">
-                      <p>
-                        <b>{{ image.title }}</b> <br>
-                        {{ image.year }} <br>
-                        {{ image.materials }} <br>
-                        {{ image.width }}cm x {{ image.height }}cm
-                      </p>
-                    </div>
+                <img src="{{ url_for('static', filename='images/uploads/' + image.url) }}"
+                     style="width: 100%;">
+                <div class="row pt-3 pb-5">
+                  <div class="col-md-12">
+                    <p>
+                      <b>{{ image.title }}</b> <br>
+                      {{ image.year }} <br>
+                      {{ image.materials }} <br>
+                      {{ image.width }}cm x {{ image.height }}cm
+                    </p>
                   </div>
                 </div>
-                {% if image.full_width %}
-                  </div>
-                {% endif %}
-              {% endfor %}
-            </div>
-            {% if link.text %}
-              <div id="text-{{ link.id }}" class="tab-pane fade">
-                <p>{{ link.text }}</p>
               </div>
+              {% if image.full_width %}
+            </div>
             {% endif %}
+            {% endfor %}
           </div>
+          {% if link.text %}
+          <div id="text-{{ link.id }}" class="tab-pane fade">
+            <p>{{ link.text }}</p>
+          </div>
+          {% endif %}
         </div>
+      </div>
       {% endfor %}
       <div class="row section" id="section-about" style="font-size: 1rem; line-height: 2rem;">
         <div class="col-md-9">
           <p>
             Paul Wallington was born in Johannesburg in 1993 and raised in Plettenberg Bay.
             He is in his final year at the Michaelis school of fine art Cape Town, South Africa.
-            Paul works predominantly in oil painting where he draws strong inspiration from South African literature and poetry.
-            His paintings exist within a larger narrative set by writers who’s stories hold a powerful resonance within South Africa today.
-            These novels attempt to explain or dissect the ongoing narrative within South Africa and challenge our idea of truth.
+            Paul works predominantly in oil painting where he draws strong inspiration from South
+            African literature and poetry.
+            His paintings exist within a larger narrative set by writers who’s stories hold a
+            powerful resonance within South Africa today.
+            These novels attempt to explain or dissect the ongoing narrative within South Africa and
+            challenge our idea of truth.
             That “truth” is further muddied when created on the canvas through oil paint.
             It is in this world of visual metaphors where these ideas become tangible.
-            Strong links to artists such as Francis Bacon and Francisco Goya are visible in his paintings.
+            Strong links to artists such as Francis Bacon and Francisco Goya are visible in his
+            paintings.
           </p>
           <a href="{{ url_for('cv') }}"
              target="_blank"
