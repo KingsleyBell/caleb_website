@@ -92,6 +92,7 @@ def edit_image(section_id, image_id):
     image = [i for i in section['images'] if i['id'] == image_id][0]
     if request.method == 'POST':
         title = request.form.get('title')
+        section_name = request.form.get('section')
         year = request.form.get('year')
         width = request.form.get('width')
         height = request.form.get('height')
@@ -99,6 +100,10 @@ def edit_image(section_id, image_id):
         display_width = request.form.get('display_width')
         align = request.form.get('align')
         full_width = request.form.get('full_width') == "true"
+
+        db_section = [s for s in db if s['name'] == section_name][0]
+        db_section['images'].append(image)
+        section['images'].remove(image)
 
         image["title"] = title
         image["year"] = year
