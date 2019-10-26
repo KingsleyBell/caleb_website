@@ -15,6 +15,9 @@ application = Flask(__name__)
 def home():
     db_path = os.path.join(application.static_folder, 'db/db.json')
     db = json.loads(open(db_path, 'r').read())
+    for section in db:
+        for im in section['images']:
+            im['offset'] = (100 - int(im['display_width'])) / 2
     return render_template(
         'index.html',
         links=db
@@ -97,9 +100,9 @@ def edit_image(section_id, image_id):
         width = request.form.get('width')
         height = request.form.get('height')
         materials = request.form.get('materials')
+        container_width = request.form.get('container_width')
         display_width = request.form.get('display_width')
         align = request.form.get('align')
-        full_width = request.form.get('full_width') == "true"
 
         db_section = [s for s in db if s['name'] == section_name][0]
         db_section['images'].append(image)
@@ -110,9 +113,9 @@ def edit_image(section_id, image_id):
         image["width"] = width
         image["height"] = height
         image["materials"] = materials
+        image["container_width"] = container_width
         image["display_width"] = display_width
         image["align"] = align
-        image["full_width"] = full_width
 
         with open(db_path, 'w') as db_write:
             db_write.write(json.dumps(db))
@@ -170,9 +173,9 @@ def upload(section_id=None):
         width = request.form.get('width')
         height = request.form.get('height')
         materials = request.form.get('materials')
+        container_width = request.form.get('container_width')
         display_width = request.form.get('display_width')
         align = request.form.get('align')
-        full_width = request.form.get('full_width') == "true"
 
         image_file = request.files.get('file')
         file_extension = image_file.filename.split('.')[-1]
@@ -188,9 +191,9 @@ def upload(section_id=None):
             "width": width,
             "height": height,
             "materials": materials,
+            "container_width": container_width,
             "display_width": display_width,
             "align": align,
-            "full_width": full_width
           }
 
         db_section['images'].append(image_dict)

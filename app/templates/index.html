@@ -96,30 +96,28 @@
           <div id="photos-{{ link.id }}" class="tab-pane fade show active">
             {% for image in link.images %}
             {% if image.full_width %}
-            <div class="w-100">
-              {% endif %}
-              <div style="width: {{ image.display_width }}%;
-                            {% if image.align in ['left', 'right'] %}
-                              text-align: {{ image.align }};
-                              {% if image.align == 'left' %}
-                                margin-right: auto;
-                              {% else %}
-                                margin-left: auto;
-                              {% endif %}
-                            {% elif image.align == 'center' %}
-                              margin: auto;
-                            {% endif %}">
+              <div class="w-100">
+            {% endif %}
+              <div style="display: inline-block; width: {{ image.container_width }}%; text-align: {{ image.align }};">
                 <img src="{{ url_for('static', filename='images/uploads/' + image.url) }}"
-                     style="width: 100%;">
-                <div class="row pt-3 pb-5">
-                  <div class="col-md-12">
-                    <p>
-                      <b>{{ image.title }}</b> <br>
-                      {{ image.year }} <br>
-                      {{ image.materials }} <br>
-                      {{ image.width }}cm x {{ image.height }}cm
-                    </p>
-                  </div>
+                     style="width: {{ image.display_width }}%;">
+                <div class="pt-3 pb-5" style="width: {{ image.display_width }}%;
+                    {% if image.align == 'left' %}
+                      text-align: left;
+                    {% elif image.align == 'right' %}
+                      text-align: right;
+                      margin-left: auto;
+                    {% else %}
+                      text-align: left;
+                      margin-left: {{ image.offset }}%;
+                    {% endif %}"
+                >
+                  <p>
+                    <b>{{ image.title }}</b> <br>
+                    {{ image.year }} <br>
+                    {{ image.materials }} <br>
+                    {{ image.width }}cm x {{ image.height }}cm
+                  </p>
                 </div>
               </div>
               {% if image.full_width %}
