@@ -95,9 +95,6 @@
         <div class="tab-content w-100">
           <div id="photos-{{ link.id }}" class="tab-pane fade show active">
             {% for image in link.images %}
-            {% if image.full_width %}
-              <div class="w-100">
-            {% endif %}
               <div style="display: inline-block; width: {{ image.container_width }}%; text-align: {{ image.align }};">
                 <img src="{{ url_for('static', filename='images/uploads/' + image.url) }}"
                      style="width: {{ image.display_width }}%;">
@@ -120,9 +117,6 @@
                   </p>
                 </div>
               </div>
-              {% if image.full_width %}
-            </div>
-            {% endif %}
             {% endfor %}
           </div>
           {% if link.text %}
