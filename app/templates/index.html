@@ -121,7 +121,7 @@
           </div>
           {% if link.text %}
           <div id="text-{{ link.id }}" class="tab-pane fade">
-            <p>{{ link.text }}</p>
+            {{ link.text|safe }}
           </div>
           {% endif %}
         </div>
