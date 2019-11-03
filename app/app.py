@@ -109,7 +109,7 @@ def edit_image(section_id, image_id):
         display_width = request.form.get('display_width')
         align = request.form.get('align')
 
-        db_section = [s for s in db if s['name'].replace('\n', ' ').replace('\r', '') == section_name][0]
+        db_section = [s for s in db if s['id'] == section_name][0]
         db_section['images'].append(image)
         section['images'].remove(image)
 
@@ -127,11 +127,11 @@ def edit_image(section_id, image_id):
 
         return redirect(url_for('sections'))
     else:
-        sections = [section['name'] for section in db]
+        sections = [{"name": section["name"], "id": section['id']} for section in db]
         return render_template(
             'edit_image.html',
             image=image,
-            section=section['name'],
+            section=section['id'],
             sections=sections
         )
 
@@ -171,7 +171,7 @@ def upload(section_id=None):
             image_ids += [image['id'] for image in s['images']]
         image_id = max(image_ids + [0]) + 1
 
-        db_section = [s for s in db if s['name'].replace('\n', ' ').replace('\r', '') == section][0]
+        db_section = [s for s in db if s['id'] == section][0]
 
         title = request.form.get('title')
         year = request.form.get('year')

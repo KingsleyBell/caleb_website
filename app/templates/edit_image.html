@@ -20,7 +20,7 @@
           <label for="section">Section</label>
           <select class="form-control" id="section" name="section" required>
             {% for s in sections %}
-              <option {% if section == s %}selected{% endif %}>{{ s }}</option>
+              <option value="{{ s.id }}" {% if section == s.id %}selected{% endif %}>{{ s.name }}</option>
             {% endfor %}
           </select>
           <label for="year">Year</label>
