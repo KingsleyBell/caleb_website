@@ -14,13 +14,18 @@ application = Flask(__name__)
 @application.route('/')
 def home():
     db_path = os.path.join(application.static_folder, 'db/db.json')
+    about_path = os.path.join(application.static_folder, 'db/about.json')
+
     db = json.loads(open(db_path, 'r').read())
     for section in db:
         for im in section['images']:
             im['offset'] = (100 - int(im['display_width'])) / 2
+
+    about = json.loads(open(about_path, 'r').read())['text']
     return render_template(
         'index.html',
-        links=db
+        links=db,
+        about=about
     )
 
 
@@ -100,11 +105,10 @@ def edit_image(section_id, image_id):
         width = request.form.get('width')
         height = request.form.get('height')
         materials = request.form.get('materials')
-        container_width = request.form.get('container_width')
         display_width = request.form.get('display_width')
         align = request.form.get('align')
 
-        db_section = [s for s in db if s['name'] == section_name][0]
+        db_section = [s for s in db if s['name'].replace('\n', ' ').replace('\r', '') == section_name][0]
         db_section['images'].append(image)
         section['images'].remove(image)
 
@@ -113,9 +117,9 @@ def edit_image(section_id, image_id):
         image["width"] = width
         image["height"] = height
         image["materials"] = materials
-        image["container_width"] = container_width
         image["display_width"] = display_width
         image["align"] = align
+        image["full_width"] = full_width
 
         with open(db_path, 'w') as db_write:
             db_write.write(json.dumps(db))
@@ -237,6 +241,22 @@ def new_cv():
 @application.route('/cv')
 def cv():
     return application.send_static_file('pdf/CV.pdf')
+
+
+@application.route('/about/', methods=['GET', 'POST'])
+@requires_auth
+def about():
+    about_path = os.path.join(application.static_folder, 'db/about.json')
+    about_json = json.loads(open(about_path, 'r').read())
+    if request.method == 'POST':
+        about_txt = request.form.get('text')
+        about_json['text'] = about_txt
+        with open(about_path, 'w') as db_write:
+            db_write.write(json.dumps(about_json))
+
+        return redirect(url_for('sections'))
+    else:
+        return render_template('about.html', about_txt=about_json['text'])
 
 
 @application.route('/shift_section_position', methods=['POST'])

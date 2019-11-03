@@ -37,6 +37,10 @@
            class="btn btn-outline-dark">
           New CV
         </a>
+        <a href="{{ url_for('about') }}"
+           class="btn btn-outline-dark">
+          About
+        </a>
       </h3>
       {% for section in db %}
       <div class="card mb-3" id="section-{{ section.id }}">
