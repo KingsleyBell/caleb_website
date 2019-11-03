@@ -54,17 +54,16 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="nav flex-column">
             {% for link in links %}
-            <li class="nav-item">
+            <li class="nav-item pb-1">
                 <span class="nav-link text-secondary py-0"
                       id="nav-{{ link.id }}"
-                >
-                  {{ link.name }}
+                      style="white-space: pre-line;"
+                >{{ link.name }}
                 </span>
             </li>
             {% endfor %}
             <li class="nav-item">
-                <span class="nav-link text-secondary py-0" id="nav-about">
-                  About
+                <span class="nav-link text-secondary py-0" id="nav-about" style="white-space: pre-line;">About
                 </span>
             </li>
           </ul>

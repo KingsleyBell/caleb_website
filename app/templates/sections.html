@@ -42,7 +42,7 @@
       <div class="card mb-3" id="section-{{ section.id }}">
         <div class="card-body">
           <h5 class="card-title">
-            {{ section.name }}
+            <span style="white-space: pre-line;">{{ section.name }}</span>
             <a href="{{ url_for('edit_section', section_id=section.id) }}"
                class="btn btn-outline-primary btn-sm ml-2">
               <i class="fa fa-pencil" style="pointer-events: none"></i>
