@@ -105,10 +105,11 @@ def edit_image(section_id, image_id):
         width = request.form.get('width')
         height = request.form.get('height')
         materials = request.form.get('materials')
+        container_width = request.form.get('container_width')
         display_width = request.form.get('display_width')
         align = request.form.get('align')
 
-        db_section = [s for s in db if s['name'].replace('\n', ' ').replace('\r', '') == section_name][0]
+        db_section = [s for s in db if s['name'] == section_name][0]
         db_section['images'].append(image)
         section['images'].remove(image)
 
@@ -117,9 +118,9 @@ def edit_image(section_id, image_id):
         image["width"] = width
         image["height"] = height
         image["materials"] = materials
+        image["container_width"] = container_width
         image["display_width"] = display_width
         image["align"] = align
-        image["full_width"] = full_width
 
         with open(db_path, 'w') as db_write:
             db_write.write(json.dumps(db))
