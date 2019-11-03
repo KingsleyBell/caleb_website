@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EDIT ABOUT</title>
+
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+        integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
+        crossorigin="anonymous">
+
+  <!-- Include Quill stylesheets -->
+  <link rel="canonical" href="https://quilljs.com/standalone/snow/">
+  <link type="application/atom+xml" rel="alternate" href="https://quilljs.com/feed.xml" title="Quill - Your powerful rich text editor" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" />
+  <link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+      <form id="about-form" method="post" enctype="multipart/form-data">
+        <label>Text</label>
+        <div class="standalone-container mb-3">
+          <div id="snow-container"></div>
+        </div>
+        <input type="text" style="display: none;" id="text" name="text">
+        <button type="submit" class="btn btn-primary mb-2">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Include the Quill library -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
+<script src="https://cdn.quilljs.com/1.0.6/quill.js"></script>
+
+<script>var aboutText = "{{ about_txt }}";</script>
+<script src="{{ url_for('static', filename='js/about.js') }}"></script>
+
+</body>
+</html>
