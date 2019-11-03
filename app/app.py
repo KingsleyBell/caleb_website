@@ -14,9 +14,14 @@ application = Flask(__name__)
 @application.route('/')
 def home():
     db_path = os.path.join(application.static_folder, 'db/db.json')
-    about_path = os.path.join(application.static_folder, 'db/about.txt')
+    about_path = os.path.join(application.static_folder, 'db/about.json')
+
     db = json.loads(open(db_path, 'r').read())
-    about = open(about_path, 'r').read()
+    for section in db:
+        for im in section['images']:
+            im['offset'] = (100 - int(im['display_width'])) / 2
+
+    about = json.loads(open(about_path, 'r').read())['text']
     return render_template(
         'index.html',
         links=db,
@@ -104,7 +109,9 @@ def edit_image(section_id, image_id):
         align = request.form.get('align')
         full_width = request.form.get('full_width') == "true"
 
-        db_section = [s for s in db if s['name'] == section_name][0]
+        print(section_name)
+        print([s['name'] for s in db])
+        db_section = [s for s in db if s['name'].replace('\n', ' ').replace('\r', '') == section_name][0]
         db_section['images'].append(image)
         section['images'].remove(image)
 
@@ -237,6 +244,22 @@ def new_cv():
 @application.route('/cv')
 def cv():
     return application.send_static_file('pdf/CV.pdf')
+
+
+@application.route('/about/', methods=['GET', 'POST'])
+@requires_auth
+def about():
+    about_path = os.path.join(application.static_folder, 'db/about.json')
+    about_json = json.loads(open(about_path, 'r').read())
+    if request.method == 'POST':
+        about_txt = request.form.get('text')
+        about_json['text'] = about_txt
+        with open(about_path, 'w') as db_write:
+            db_write.write(json.dumps(about_json))
+
+        return redirect(url_for('sections'))
+    else:
+        return render_template('about.html', about_txt=about_json['text'])
 
 
 @application.route('/shift_section_position', methods=['POST'])

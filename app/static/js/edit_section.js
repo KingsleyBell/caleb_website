@@ -13,7 +13,7 @@ $(document).ready(function () {
     });
     quill.clipboard.dangerouslyPasteHTML(htmlDecode(sectionText));
 
-    $("#section-form").on("submit", feunction () {
+    $("#section-form").on("submit", function () {
         var myEditor = document.querySelector("#snow-container");
         var html = myEditor.children[0].innerHTML;
         $("#text").val(html);

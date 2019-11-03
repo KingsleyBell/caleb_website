@@ -95,8 +95,11 @@
           <div id="photos-{{ link.id }}" class="tab-pane fade show active">
             {% for image in link.images %}
               <div style="display: inline-block; width: {{ image.container_width }}%; text-align: {{ image.align }};">
-                <img src="{{ url_for('static', filename='images/uploads/' + image.url) }}"
-                     style="width: {{ image.display_width }}%;">
+                <img class="section-img"
+                     src="{{ url_for('static', filename='images/uploads/' + image.url) }}"
+                     style="width: {{ image.display_width }}%;"
+                     data-toggle="modal"
+                     data-target="#modal-{{ image.url }}">
                 <div class="pt-3 pb-5" style="width: {{ image.display_width }}%;
                     {% if image.align == 'left' %}
                       text-align: left;
@@ -109,10 +112,18 @@
                     {% endif %}"
                 >
                   <p>
-                    <b>{{ image.title }}</b> <br>
-                    {{ image.year }} <br>
-                    {{ image.materials }} <br>
-                    {{ image.width }}cm x {{ image.height }}cm
+                    {% if image.title %}
+                      <b>{{ image.title }}</b> <br>
+                    {% endif %}
+                    {% if image.year %}
+                      {{ image.year }} <br>
+                    {% endif %}
+                    {% if image.materials %}
+                      {{ image.materials }} <br>
+                    {% endif %}
+                    {% if image.width and image.height%}
+                      {{ image.width }}cm x {{ image.height }}cm
+                    {% endif %}
                   </p>
                 </div>
               </div>
@@ -128,7 +139,7 @@
       {% endfor %}
       <div class="row section" id="section-about" style="font-size: 1rem; line-height: 2rem;">
         <div class="col-md-12">
-          <p style="white-space: pre-line; white-space: pre-wrap;">{{ about }}</p>
+          <p style="white-space: pre-line; white-space: pre-wrap;">{{ about|safe }}</p>
           <a href="{{ url_for('cv') }}"
              target="_blank"
              class="btn btn-outline-dark btn-sm my-4 rounded-0">
@@ -149,6 +160,19 @@
     </a>
   </p>
 </div>
+
+{% for link in links %}
+  {% for image in link.images %}
+    <div class="modal fade" id="modal-{{ image.url }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" data-dismiss="modal">
+          <img src="{{ url_for('static', filename='images/uploads/' + image.url) }}"
+               style="max-width: 100%; max-height: 90vh; margin: auto;">
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+{% endfor %}
 
 <!-- Le javascript
 ================================================== -->

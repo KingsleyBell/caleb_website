@@ -77,3 +77,18 @@ ol li::before {
 .menu-nav.active {
     color: #343a40!important;
 }
+
+.modal-dialog {
+  max-width: 90%;
+  max-height: 90vh;
+  margin: 5vh auto;
+  padding: 0;
+}
+
+.modal-content {
+  height: auto;
+  max-height: 90vh;
+  border-radius: 0;
+  border: none;
+  background-color: transparent;
+}
