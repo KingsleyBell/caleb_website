@@ -54,17 +54,16 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="nav flex-column">
             {% for link in links %}
-            <li class="nav-item">
+            <li class="nav-item pb-1">
                 <span class="nav-link text-secondary py-0"
                       id="nav-{{ link.id }}"
-                >
-                  {{ link.name }}
+                      style="white-space: pre-line;"
+                >{{ link.name }}
                 </span>
             </li>
             {% endfor %}
             <li class="nav-item">
-                <span class="nav-link text-secondary py-0" id="nav-about">
-                  About
+                <span class="nav-link text-secondary py-0" id="nav-about" style="white-space: pre-line;">About
                 </span>
             </li>
           </ul>
@@ -95,58 +94,41 @@
         <div class="tab-content w-100">
           <div id="photos-{{ link.id }}" class="tab-pane fade show active">
             {% for image in link.images %}
-            {% if image.full_width %}
-            <div class="w-100">
-              {% endif %}
-              <div style="width: {{ image.display_width }}%;
-                            {% if image.align in ['left', 'right'] %}
-                              text-align: {{ image.align }};
-                              {% if image.align == 'left' %}
-                                margin-right: auto;
-                              {% else %}
-                                margin-left: auto;
-                              {% endif %}
-                            {% elif image.align == 'center' %}
-                              margin: auto;
-                            {% endif %}">
+              <div style="display: inline-block; width: {{ image.container_width }}%; text-align: {{ image.align }};">
                 <img src="{{ url_for('static', filename='images/uploads/' + image.url) }}"
-                     style="width: 100%;">
-                <div class="row pt-3 pb-5">
-                  <div class="col-md-12">
-                    <p>
-                      <b>{{ image.title }}</b> <br>
-                      {{ image.year }} <br>
-                      {{ image.materials }} <br>
-                      {{ image.width }}cm x {{ image.height }}cm
-                    </p>
-                  </div>
+                     style="width: {{ image.display_width }}%;">
+                <div class="pt-3 pb-5" style="width: {{ image.display_width }}%;
+                    {% if image.align == 'left' %}
+                      text-align: left;
+                    {% elif image.align == 'right' %}
+                      text-align: right;
+                      margin-left: auto;
+                    {% else %}
+                      text-align: left;
+                      margin-left: {{ image.offset }}%;
+                    {% endif %}"
+                >
+                  <p>
+                    <b>{{ image.title }}</b> <br>
+                    {{ image.year }} <br>
+                    {{ image.materials }} <br>
+                    {{ image.width }}cm x {{ image.height }}cm
+                  </p>
                 </div>
               </div>
-              {% if image.full_width %}
-            </div>
-            {% endif %}
             {% endfor %}
           </div>
           {% if link.text %}
           <div id="text-{{ link.id }}" class="tab-pane fade">
-            <p>{{ link.text }}</p>
+            {{ link.text|safe }}
           </div>
           {% endif %}
         </div>
       </div>
       {% endfor %}
       <div class="row section" id="section-about" style="font-size: 1rem; line-height: 2rem;">
-        <div class="col-md-9">
-          <p>
-            Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell
-            Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell
-            Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell
-            Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell
-            Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell
-            Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell
-            Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell
-            Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell Caleb Bell
-          </p>
+        <div class="col-md-12">
+          <p style="white-space: pre-line; white-space: pre-wrap;">{{ about }}</p>
           <a href="{{ url_for('cv') }}"
              target="_blank"
              class="btn btn-outline-dark btn-sm my-4 rounded-0">

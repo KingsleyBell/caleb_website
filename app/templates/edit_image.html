@@ -31,6 +31,8 @@
           <input type="number" class="form-control" id="height" name="height" value="{{ image.height }}" required>
           <label for="materials">Materials</label>
           <input type="text" class="form-control" id="materials" name="materials" value="{{ image.materials }}" required>
+          <label for="container_width">Container Width (0-100)</label>
+          <input type="number" class="form-control" id="container_width" name="container_width" value="{{ image.container_width }}" required>
           <label for="display_width">Display Width (0-100)</label>
           <input type="number" class="form-control" id="display_width" name="display_width" value="{{ image.display_width }}" required>
           <label for="align">Align</label>
@@ -38,11 +40,6 @@
             <option {% if image.align == 'left' %}selected{% endif %}>left</option>
             <option {% if image.align == 'center' %}selected{% endif %}>center</option>
             <option {% if image.align == 'right' %}selected{% endif %}>right</option>
-          </select>
-          <label for="full_width">Full Width</label>
-          <select class="form-control" id="full_width" name="full_width" required>
-            <option {% if image.full_width %}selected{% endif %}>true</option>
-            <option {% if not image.full_width %}selected{% endif %}>false</option>
           </select>
         </div>
         <button type="submit" class="btn btn-primary mb-2">Submit</button>

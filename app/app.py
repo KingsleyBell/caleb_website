@@ -14,10 +14,13 @@ application = Flask(__name__)
 @application.route('/')
 def home():
     db_path = os.path.join(application.static_folder, 'db/db.json')
+    about_path = os.path.join(application.static_folder, 'db/about.txt')
     db = json.loads(open(db_path, 'r').read())
+    about = open(about_path, 'r').read()
     return render_template(
         'index.html',
-        links=db
+        links=db,
+        about=about
     )
 
 
