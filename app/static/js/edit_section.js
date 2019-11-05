@@ -1,6 +1,9 @@
 var quill, sectionText;
 
 function htmlDecode(input){
+  if (input.length == 0) {
+    return input;
+  }
   var e = document.createElement('div');
   e.innerHTML = input;
   return e.childNodes[0].nodeValue;
@@ -8,7 +11,7 @@ function htmlDecode(input){
 
 $(document).ready(function () {
     quill = new Quill('#snow-container', {
-        placeholder: "test",
+        placeholder: "Section text here",
         theme: "snow"
     });
     quill.clipboard.dangerouslyPasteHTML(htmlDecode(sectionText));
