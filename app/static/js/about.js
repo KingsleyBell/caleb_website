@@ -11,7 +11,7 @@ function htmlDecode(input){
 
 $(document).ready(function () {
     quill = new Quill('#snow-container', {
-        placeholder: "test",
+        placeholder: "About text",
         theme: "snow"
     });
     console.log(aboutText);
