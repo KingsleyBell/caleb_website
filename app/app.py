@@ -110,8 +110,10 @@ def edit_image(section_id, image_id):
         align = request.form.get('align')
 
         db_section = [s for s in db if s['id'] == section_name][0]
-        db_section['images'].append(image)
-        section['images'].remove(image)
+
+        if db_section != section:
+            db_section['images'].append(image)
+            section['images'].remove(image)
 
         image["title"] = title
         image["year"] = year
