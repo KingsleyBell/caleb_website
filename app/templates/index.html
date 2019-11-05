@@ -99,12 +99,12 @@
                      style="width: {{ image.display_width }}%;">
                 <div class="pt-3 pb-5" style="width: {{ image.display_width }}%;
                     {% if image.align == 'left' %}
-                      text-align: left;
+                      text-align: right;
                     {% elif image.align == 'right' %}
                       text-align: right;
                       margin-left: auto;
                     {% else %}
-                      text-align: left;
+                      text-align: right;
                       margin-left: {{ image.offset }}%;
                     {% endif %}"
                 >

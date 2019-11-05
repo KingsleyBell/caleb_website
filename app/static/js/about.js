@@ -1,6 +1,9 @@
 var quill, aboutText;
 
 function htmlDecode(input){
+  if (input.length == 0) {
+    return input;
+  }
   var e = document.createElement('div');
   e.innerHTML = input;
   return e.childNodes[0].nodeValue;
