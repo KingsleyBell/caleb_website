@@ -5,7 +5,7 @@ services:
     build: ./
     hostname: web
     ports:
-      - "8003:8003"
+      - "8002:8002"
     volumes:
       - /home/ubuntu/caleb_website/app/static/db/db.json:/app/static/db/db.json
       - /home/ubuntu/caleb_website/app/static/images/:/app/static/images/
