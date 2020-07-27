@@ -8,6 +8,7 @@ services:
       - "8002:8002"
     volumes:
       - /home/ubuntu/caleb_website/app/static/db/db.json:/app/static/db/db.json
+      - /home/ubuntu/caleb_website/app/static/db/about.json:/app/static/db/about.json
       - /home/ubuntu/caleb_website/app/static/images/:/app/static/images/
       - /home/ubuntu/caleb_website/app/static/pdf/:/app/static/pdf/
     env_file:
