@@ -35,7 +35,7 @@
   <div class="row">
     <nav class="col-md-2 sidebar navbar navbar-expand-lg navbar-light pb-4" id="home-nav">
       <div class="sidebar-sticky">
-        <h3 class="site-heading pl-3" style="position: relative">
+        <h3 class="site-heading" style="position: relative">
           <a href="#" id="home-link">
             Caleb <br>
             Bell
@@ -55,7 +55,7 @@
           <ul class="nav flex-column">
             {% for link in links %}
             <li class="nav-item pb-1">
-                <span class="nav-link text-secondary py-0"
+                <span class="nav-link text-secondary py-0 pl-0"
                       id="nav-{{ link.id }}"
                       style="white-space: pre-line;"
                 >{{ link.name }}
@@ -63,7 +63,7 @@
             </li>
             {% endfor %}
             <li class="nav-item">
-                <span class="nav-link text-secondary py-0" id="nav-about" style="white-space: pre-line;">About
+                <span class="nav-link text-secondary py-0 pl-0" id="nav-about" style="white-space: pre-line;">About
                 </span>
             </li>
           </ul>
@@ -80,18 +80,12 @@
       </div>
       {% for link in links %}
       <div class="row section px-3" id="section-{{ link.id }}">
-        <ul class="nav nav-tabs w-100 mb-3">
-          <li>
-            <h5><a class="menu-nav active show" data-toggle="tab" href="#photos-{{ link.id }}">Photos</a>
-            </h5>
-          </li>
-          {% if link.text %}
-          <li class="active">
-            <h5><a class="menu-nav" data-toggle="tab" href="#text-{{ link.id }}">Text</a></h5>
-          </li>
-          {% endif %}
-        </ul>
         <div class="tab-content w-100">
+          {% if link.text %}
+            <div id="text-{{ link.id }}" class="section-text">
+              {{ link.text|safe }}
+            </div>
+          {% endif %}
           <div id="photos-{{ link.id }}" class="tab-pane fade show active">
             {% for image in link.images %}
               <div style="display: inline-block; width: {{ image.container_width }}%; text-align: {{ image.align }};">
@@ -129,11 +123,6 @@
               </div>
             {% endfor %}
           </div>
-          {% if link.text %}
-          <div id="text-{{ link.id }}" class="tab-pane fade">
-            {{ link.text|safe }}
-          </div>
-          {% endif %}
         </div>
       </div>
       {% endfor %}

@@ -73,6 +73,14 @@
             </a>
           </h5>
           <hr>
+          {% if section.text %}
+            Text:
+            <br>
+            {{ section.text|safe }}
+          {% else %}
+            No text.
+          {% endif %}
+          <hr>
           <ol>
             {% for image in section.images %}
               <li class="py-3 section-image" id="image-{{ image.id }}">

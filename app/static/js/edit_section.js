@@ -16,9 +16,14 @@ $(document).ready(function () {
     });
     quill.clipboard.dangerouslyPasteHTML(htmlDecode(sectionText));
 
-    $("#section-form").on("submit", function () {
-        var myEditor = document.querySelector("#snow-container");
-        var html = myEditor.children[0].innerHTML;
-        $("#text").val(html);
+    $("#section-form").on("submit", function (e) {
+        if (quill.getLength() <=  1) {
+          $("#text").val("");
+        }
+        else {
+          var myEditor = document.querySelector("#snow-container");
+          var html = myEditor.children[0].innerHTML;
+          $("#text").val(html);
+        }
     });
 });

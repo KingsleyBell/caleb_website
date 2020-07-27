@@ -25,6 +25,8 @@ body {
 
 .nav-link {
     cursor: pointer;
+    font-size: 18px;
+    font-weight: 100;
 }
 
 .nav-link.active {
@@ -91,4 +93,8 @@ ol li::before {
   border-radius: 0;
   border: none;
   background-color: transparent;
+}
+.section-text {
+    font-size: 18px;
+    font-weight: 100;
 }
