@@ -1,15 +1,15 @@
 version: '3'
 services:
-  paul_web:
-    container_name: paul_web
+  caleb_web:
+    container_name: caleb_web
     build: ./
     hostname: web
     ports:
-      - "8001:8001"
+      - "8002:8002"
     volumes:
-      - /home/ubuntu/paul_website/app/static/db/db.json:/app/static/db/db.json
-      - /home/ubuntu/paul_website/app/static/images/:/app/static/images/
-      - /home/ubuntu/paul_website/app/static/pdf/:/app/static/pdf/
+      - /home/ubuntu/caleb_website/app/static/db/db.json:/app/static/db/db.json
+      - /home/ubuntu/caleb_website/app/static/images/:/app/static/images/
+      - /home/ubuntu/caleb_website/app/static/pdf/:/app/static/pdf/
     env_file:
       - "envfile"
 networks:
