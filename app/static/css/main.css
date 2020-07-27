@@ -98,3 +98,7 @@ ol li::before {
     font-size: 18px;
     font-weight: 100;
 }
+
+.dropdown-item:hover {
+    background-color: inherit;
+}

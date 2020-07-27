@@ -58,14 +58,23 @@ def new_section():
     if request.method == 'POST':
         section_name = request.form.get('section')
         section_id = re.sub('[^A-Za-z0-9]+', '_', section_name).lower()
-        section_dict = {'name': section_name, 'id': section_id, 'text': '', 'images': []}
+        is_parent = bool(request.form.get('parent_section'))
+        sub_section = request.form.get('sub_section')
+        section_dict = {
+            'name': section_name,
+            'id': section_id,
+            'is_parent': is_parent,
+            'sub_section': sub_section,
+            'text': '',
+            'images': []
+        }
         db.append(section_dict)
         with open(db_path, 'w') as db_write:
             db_write.write(json.dumps(db))
 
         return redirect(url_for('sections'))
     else:
-        return render_template('new_section.html')
+        return render_template('new_section.html', db=db)
 
 
 @application.route('/edit_section/<string:section_id>/', methods=['GET', 'POST'])
@@ -264,11 +273,11 @@ def about():
 
 @application.route('/shift_section_position', methods=['POST'])
 def shift_section_position():
-    section_id = request.form.get('section_id')
-    shift = int(request.form.get('shift'))
-
     db_path = os.path.join(application.static_folder, 'db/db.json')
     db = json.loads(open(db_path, 'r').read())
+
+    section_id = request.form.get('section_id')
+    shift = int(request.form.get('shift'))
 
     section = [s for s in db if s['id'] == section_id][0]
     section_index = db.index(section)

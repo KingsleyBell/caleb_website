@@ -10,20 +10,21 @@ function htmlDecode(input){
 }
 
 $(document).ready(function () {
+  if (!isParent) {
     quill = new Quill('#snow-container', {
-        placeholder: "Section text here",
-        theme: "snow"
+      placeholder: "Section text here",
+      theme: "snow"
     });
     quill.clipboard.dangerouslyPasteHTML(htmlDecode(sectionText));
 
     $("#section-form").on("submit", function (e) {
-        if (quill.getLength() <=  1) {
-          $("#text").val("");
-        }
-        else {
-          var myEditor = document.querySelector("#snow-container");
-          var html = myEditor.children[0].innerHTML;
-          $("#text").val(html);
-        }
+      if (quill.getLength() <= 1) {
+        $("#text").val("");
+      } else {
+        var myEditor = document.querySelector("#snow-container");
+        var html = myEditor.children[0].innerHTML;
+        $("#text").val(html);
+      }
     });
+  }
 });

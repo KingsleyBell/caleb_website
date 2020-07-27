@@ -25,11 +25,13 @@
           <label for="name">Name</label>
           <textarea rows="3" class="form-control" id="name" name="name" >{{ section.name }}</textarea>
         </div>
-        <label>Text</label>
-        <div class="standalone-container mb-3">
-          <div id="snow-container"></div>
-        </div>
-        <input type="text" style="display: none;" id="text" name="text">
+        {% if not section.is_parent %}
+          <label>Text</label>
+          <div class="standalone-container mb-3">
+            <div id="snow-container"></div>
+          </div>
+          <input type="text" style="display: none;" id="text" name="text">
+        {% endif %}
         <button type="submit" class="btn btn-primary mb-2">Submit</button>
       </form>
     </div>
@@ -44,7 +46,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
 <script src="https://cdn.quilljs.com/1.0.6/quill.js"></script>
 
-<script>var sectionText = "{{ section.text }}";</script>
+<script>var sectionText = "{{ section.text }}", isParent = "{{ section.is_parent }}";</script>
 <script src="{{ url_for('static', filename='js/edit_section.js') }}"></script>
 
 </body>

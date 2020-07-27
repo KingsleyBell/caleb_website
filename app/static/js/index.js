@@ -21,4 +21,18 @@ $(document).ready(function() {
       linkId = targetId[targetId.length - 1];
     $("#section-" + linkId + " .menu-nav.active.show").removeClass("active show");
   });
+
+  $(".section-expand").click(function(e) {
+    let item = $(this).children("span:first");
+    invertCollapse(item);
+  });
+
+  function invertCollapse(item) {
+    if (item.html() == "+") {
+      item.html("-")
+    }
+    else {
+      item.html("+")
+    }
+  }
 });

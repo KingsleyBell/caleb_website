@@ -66,57 +66,70 @@
                     style="float: right;">
               <i class="fa fa-arrow-up" style="pointer-events: none"></i>
             </button>
-            <a href="{{ url_for('upload', section_id=section.id) }}"
-               class="btn btn-outline-dark btn-sm"
-               style="float: right;">
-              Upload
-            </a>
+            {% if not section.is_parent %}
+              <a href="{{ url_for('upload', section_id=section.id) }}"
+                 class="btn btn-outline-dark btn-sm"
+                 style="float: right;">
+                Upload
+              </a>
+            {% endif %}
           </h5>
           <hr>
-          {% if section.text %}
-            Text:
-            <br>
-            {{ section.text|safe }}
+          {% if not section.is_parent %}
+            {% if section.text %}
+              Text:
+              <br>
+              {{ section.text|safe }}
+            {% else %}
+              No text.
+            {% endif %}
+            <hr>
+            <ol>
+              {% for image in section.images %}
+                <li class="py-3 section-image" id="image-{{ image.id }}">
+                  {{ image.title }}
+                  <button id="delete-image-{{ section.id }}-{{ image.id }}"
+                          class="delete-image btn btn-outline-danger btn-sm ml-1"
+                          style="float: right;">
+                    <i class="fa fa-times" style="pointer-events: none"></i>
+                  </button>
+                  <button id="shift-image-down-{{ section.id }}-{{ image.id }}"
+                          class="shift-image-down btn btn-sm btn-outline-success ml-1"
+                          style="float: right;">
+                    <i class="fa fa-arrow-down" style="pointer-events: none"></i>
+                  </button>
+                  <button id="shift-image-up-{{ section.id }}-{{ image.id }}"
+                          class="shift-image-up btn btn-sm btn-outline-success ml-1"
+                          style="float: right;">
+                    <i class="fa fa-arrow-up" style="pointer-events: none"></i>
+                  </button>
+                  <a href="{{ url_for('edit_image', image_id=image.id, section_id=section.id) }}"
+                     class="btn btn-outline-primary btn-sm"
+                     style="float: right;">
+                    <i class="fa fa-pencil" style="pointer-events: none"></i>
+                  </a>
+                  <br>
+                  <small>
+                    {{ image.year }} |
+                    {{ image.width }} x {{ image.height }} |
+                    {{ image.materials }} |
+                    {{ image.container_width }}% |
+                    {{ image.display_width }}% |
+                    {{ image.align }} |
+                  </small>
+                </li>
+              {% endfor %}
+            </ol>
           {% else %}
-            No text.
-          {% endif %}
-          <hr>
-          <ol>
-            {% for image in section.images %}
-              <li class="py-3 section-image" id="image-{{ image.id }}">
-                {{ image.title }}
-                <button id="delete-image-{{ section.id }}-{{ image.id }}"
-                        class="delete-image btn btn-outline-danger btn-sm ml-1"
-                        style="float: right;">
-                  <i class="fa fa-times" style="pointer-events: none"></i>
-                </button>
-                <button id="shift-image-down-{{ section.id }}-{{ image.id }}"
-                        class="shift-image-down btn btn-sm btn-outline-success ml-1"
-                        style="float: right;">
-                  <i class="fa fa-arrow-down" style="pointer-events: none"></i>
-                </button>
-                <button id="shift-image-up-{{ section.id }}-{{ image.id }}"
-                        class="shift-image-up btn btn-sm btn-outline-success ml-1"
-                        style="float: right;">
-                  <i class="fa fa-arrow-up" style="pointer-events: none"></i>
-                </button>
-                <a href="{{ url_for('edit_image', image_id=image.id, section_id=section.id) }}"
-                   class="btn btn-outline-primary btn-sm"
-                   style="float: right;">
-                  <i class="fa fa-pencil" style="pointer-events: none"></i>
-                </a>
-                <br>
-                <small>
-                  {{ image.year }} |
-                  {{ image.width }} x {{ image.height }} |
-                  {{ image.materials }} |
-                  {{ image.container_width }}% |
-                  {{ image.display_width }}% |
-                  {{ image.align }} |
-                </small>
-              </li>
+            Subsections:
+            <ul>
+            {% for inner_section in db %}
+              {% if inner_section.sub_section == section.id %}
+                <li>{{ inner_section.name }}</li>
+              {% endif %}
             {% endfor %}
-          </ol>
+            </ul>
+          {% endif %}
         </div>
       </div>
       {% endfor %}
