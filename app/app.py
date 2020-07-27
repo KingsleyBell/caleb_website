@@ -87,17 +87,19 @@ def edit_section(section_id):
         section_name = request.form.get('name')
         section_id = re.sub('[^A-Za-z0-9]+', '_', section_name).lower()
         section_text = request.form.get('text')
+        sub_section = request.form.get('sub_section')
 
         section['name'] = section_name
         section['id'] = section_id
         section['text'] = section_text
+        section['sub_section'] = sub_section
 
         with open(db_path, 'w') as db_write:
             db_write.write(json.dumps(db))
 
         return redirect(url_for('sections'))
     else:
-        return render_template('edit_section.html', section=section)
+        return render_template('edit_section.html', section=section, db=db)
 
 
 @application.route('/edit_image/<string:section_id>/<int:image_id>/', methods=['GET', 'POST'])

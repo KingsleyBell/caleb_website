@@ -26,11 +26,24 @@
           <textarea rows="3" class="form-control" id="name" name="name" >{{ section.name }}</textarea>
         </div>
         {% if not section.is_parent %}
-          <label>Text</label>
-          <div class="standalone-container mb-3">
-            <div id="snow-container"></div>
+          <div class="form-group">
+            <label>Text</label>
+            <div class="standalone-container mb-3">
+              <div id="snow-container"></div>
+            </div>
+            <input type="text" style="display: none;" id="text" name="text">
           </div>
-          <input type="text" style="display: none;" id="text" name="text">
+          <div class="form-group">
+            <label for="sub_section">Subsection Of</label>
+            <select id="sub_section" name="sub_section">
+              <option></option>
+              {% for inner_section in db %}
+                {% if inner_section.is_parent %}
+                  <option value="{{ inner_section.id }}" {% if inner_section.id == section.sub_section %}selected{% endif %}>{{ inner_section.name }}</option>
+                {% endif %}
+              {% endfor %}
+            </select>
+          </div>
         {% endif %}
         <button type="submit" class="btn btn-primary mb-2">Submit</button>
       </form>
