@@ -57,13 +57,13 @@
               {% if link.is_parent %}
                 <li class="nav-item pb-1">
                   <a class="section-expand nav-link text-secondary p-0" data-toggle="collapse" href="#{{ link.id }}-collapse" role="button" aria-expanded="false">
-                    {{ link.name }} <span class="menu-expand float-right">+</span>
+                    {{ link.name }} <span class="menu-expand float-right pl-2">+</span>
                   </a>
                   <div class="collapse" id="{{ link.id }}-collapse">
                     {% for inner_link in links %}
                       {% if inner_link.sub_section == link.id %}
                         <div class="dropdown-item">
-                          <span class="nav-link text-secondary py-0 pl-0"
+                          <span class="nav-link nav-section text-secondary py-0 pl-0"
                                 id="nav-{{ inner_link.id }}"
                                 style="white-space: pre-line;"
                           >{{ inner_link.name }}
@@ -75,7 +75,7 @@
                 </li>
               {% elif not link.sub_section %}
                 <li class="nav-item pb-1">
-                    <span class="nav-link text-secondary py-0 pl-0"
+                    <span class="nav-link nav-section text-secondary py-0 pl-0"
                           id="nav-{{ link.id }}"
                           style="white-space: pre-line;"
                     >{{ link.name }}

@@ -6,7 +6,7 @@ $(document).ready(function() {
     $("#section-web-home").addClass("active");
   });
 
-  $(".nav-link").click(function(e) {
+  $(".nav-link.nav-section").click(function(e) {
     var targetId = e.target.id.split("-"),
     linkId = targetId[targetId.length - 1];
     $(".section.active").removeClass("active");
