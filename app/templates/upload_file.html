@@ -16,7 +16,12 @@
       <form method="post" enctype="multipart/form-data">
         <div class="form-group">
           <label for="file">{{ form_label }}</label>
-          <input type="file" class="form-control-file" id="file" name="file" required>
+          <input type="file"
+                 class="form-control-file"
+                 id="file"
+                 name="file"
+                 data-max-size="4096"
+                 required>
         </div>
         <button type="submit" class="btn btn-primary mb-2">Submit</button>
       </form>
