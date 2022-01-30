@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 import os
 import re
@@ -24,6 +25,7 @@ def home():
     about = json.loads(open(about_path, 'r').read())['text']
     return render_template(
         'index.html',
+        now=datetime.utcnow(),
         links=db,
         about=about
     )
