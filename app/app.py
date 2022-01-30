@@ -65,11 +65,13 @@ def new_section():
         section_dict = {
             'name': section_name,
             'id': section_id,
-            'is_parent': is_parent,
             'sub_section': sub_section,
             'text': '',
             'images': []
         }
+        if is_parent:
+            section_dict['is_parent'] = is_parent
+
         db.append(section_dict)
         with open(db_path, 'w') as db_write:
             db_write.write(json.dumps(db))
