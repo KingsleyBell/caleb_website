@@ -143,6 +143,14 @@
                 </div>
               </div>
             {% endfor %}
+            {% for iframe in link.iframes %}
+              <div>
+                <iframe class="section-img"
+                        src="{{ iframe.url }}"
+                        style="width: 100%; height: 80vh;">
+                </iframe>
+              </div>
+            {% endfor %}
           </div>
         </div>
       </div>

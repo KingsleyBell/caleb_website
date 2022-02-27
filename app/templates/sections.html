@@ -68,9 +68,14 @@
             </button>
             {% if not section.is_parent %}
               <a href="{{ url_for('upload', section_id=section.id) }}"
-                 class="btn btn-outline-dark btn-sm"
+                 class="btn btn-outline-dark btn-sm ml-1"
                  style="float: right;">
                 Upload
+              </a>
+              <a href="{{ url_for('new_iframe', section_id=section.id) }}"
+                 class="btn btn-outline-dark btn-sm"
+                 style="float: right;">
+                New Iframe
               </a>
             {% endif %}
           </h5>
@@ -84,7 +89,23 @@
               No text.
             {% endif %}
             <hr>
+            {% if section.iframes %}
+              <h5>IFRAMES</h5>
+              <ol>
+                {% for iframe in section.iframes %}
+                  <li class="py-3 section-image" id="iframe-{{ iframe.id }}">
+                    {{ iframe.url }}
+                    <button id="delete-iframe-{{ section.id }}-{{ iframe.id }}"
+                            class="delete-iframe btn btn-outline-danger btn-sm ml-1"
+                            style="float: right;">
+                      <i class="fa fa-times" style="pointer-events: none"></i>
+                    </button>
+                  </li>
+                {% endfor %}
+              </ol>
+            {% endif %}
             <ol>
+              <h5>IMAGES</h5>
               {% for image in section.images %}
                 <li class="py-3 section-image" id="image-{{ image.id }}">
                   {{ image.title }}
@@ -154,6 +175,7 @@
 <!--Custom js-->
 <script>
   var deleteImageUrl = "{{ url_for('delete_image') }}",
+    deleteIframeUrl = "{{ url_for('delete_iframe') }}",
     shiftImageUrl = "{{ url_for('shift_image_position') }}",
     shiftSectionUrl = "{{ url_for('shift_section_position') }}";
 </script>

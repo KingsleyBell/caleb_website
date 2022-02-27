@@ -19,7 +19,8 @@ def home():
 
     db = json.loads(open(db_path, 'r').read())
     for section in db:
-        for im in section['images']:
+        for im in section.get("images", []):
+            im['offset'] = (100 - int(im['display_width'])) / 2
             im['offset'] = (100 - int(im['display_width'])) / 2
 
     about = json.loads(open(about_path, 'r').read())['text']
@@ -67,7 +68,8 @@ def new_section():
             'id': section_id,
             'sub_section': sub_section,
             'text': '',
-            'images': []
+            'images': [],
+            'iframes': [],
         }
         if is_parent:
             section_dict['is_parent'] = is_parent
@@ -153,7 +155,7 @@ def edit_image(section_id, image_id):
         )
 
 
-@application.route('/edit_image/', methods=['POST'])
+@application.route('/delete_image/', methods=['POST'])
 @requires_auth
 def delete_image():
     section_id = request.form.get('section_id')
@@ -167,6 +169,25 @@ def delete_image():
 
     section['images'].remove(image)
     delete_image_file(filename)
+
+    with open(db_path, 'w') as db_write:
+        db_write.write(json.dumps(db))
+
+    return jsonify({'success': True})
+
+
+@application.route('/delete_iframe/', methods=['POST'])
+@requires_auth
+def delete_iframe():
+    section_id = request.form.get('section_id')
+    iframe_id = int(request.form.get('iframe_id'))
+
+    db_path = os.path.join(application.static_folder, 'db/db.json')
+    db = json.loads(open(db_path, 'r').read())
+    section = [s for s in db if s['id'] == section_id][0]
+    iframe = [i for i in section['iframes'] if i['id'] == iframe_id][0]
+
+    section['iframes'].remove(iframe)
 
     with open(db_path, 'w') as db_write:
         db_write.write(json.dumps(db))
@@ -226,6 +247,39 @@ def upload(section_id=None):
     else:
         sections = {section['name']: section['id'] for section in db}
         return render_template('upload.html', sections=sections, section=section_id)
+
+
+@application.route('/iframe/', methods=['GET', 'POST'])
+@application.route('/iframe/<string:section_id>/', methods=['GET', 'POST'])
+@requires_auth
+def new_iframe(section_id=None):
+    db_path = os.path.join(application.static_folder, 'db/db.json')
+    db = json.loads(open(db_path, 'r').read())
+    if request.method == 'POST':
+        section = request.form.get('section')
+
+        iframe_ids = []
+        for s in db:
+            iframe_ids += [iframe['id'] for iframe in s.get('iframes', [])]
+        iframe_id = max(iframe_ids + [0]) + 1
+
+        db_section = [s for s in db if s['id'] == section][0]
+
+        url = request.form.get('url')
+
+        iframe_dict = {
+            "id": iframe_id,
+            "url": url,
+        }
+
+        db_section['iframes'].append(iframe_dict)
+        with open(db_path, 'w') as db_write:
+            db_write.write(json.dumps(db))
+
+        return redirect(url_for('sections'))
+    else:
+        sections = {section['name']: section['id'] for section in db}
+        return render_template('iframe.html', sections=sections, section=section_id)
 
 
 @application.route('/new_home_image/', methods=['GET', 'POST'])

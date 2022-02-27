@@ -1,4 +1,5 @@
 var deleteImageUrl,
+  deleteIframeUrl,
   shiftImageUrl,
   shiftSectionUrl;
 
@@ -95,6 +96,20 @@ $(document).ready(function() {
       data: {"image_id": imageId, "section_id": sectionId},
       success: function() {
         $("#image-" + imageId).remove();
+      }
+    });
+  });
+
+  $(".delete-iframe").click(function(e) {
+    var targetId = e.target.id.split('-'),
+    sectionId = targetId[targetId.length - 2],
+    iframeId = targetId[targetId.length - 1];
+    $.ajax({
+      type: "POST",
+      url: deleteIframeUrl,
+      data: {"iframe_id": iframeId, "section_id": sectionId},
+      success: function() {
+        $("#iframe-" + iframeId).remove();
       }
     });
   });
